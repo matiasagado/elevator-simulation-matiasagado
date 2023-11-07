@@ -16,7 +16,7 @@ public class ElevatorSimulation {
             this.passengers = new LinkedList<>();
         }
 
-        // Method to check if the elevator is at capacity.
+        // Method to check if the elevator is full.
         public boolean isFull() {
 
             boolean full = false;
@@ -37,7 +37,7 @@ public class ElevatorSimulation {
         }
 
         // method to unload passengers at their destination
-        public void unloadPassenger() {
+        public void unloadPassengers() {
             Iterator<Passenger> i = passengers.iterator();
             while (i.hasNext()) {
                 Passenger passenger = i.next();
@@ -48,7 +48,7 @@ public class ElevatorSimulation {
         }
     }
 
-    class Passenger {
+    static class Passenger {
 
         private int startingFloor;
         private int destinationFloor;
@@ -73,10 +73,6 @@ public class ElevatorSimulation {
 
         public int getDestinationFloor() {
             return destinationFloor;
-        }
-
-        public int getArrivalTick() {
-            return arrivalTick;
         }
     }
 
