@@ -52,20 +52,19 @@ public class ElevatorSimulation {
 
         private int startingFloor;
         private int destinationFloor;
-        private int id;
-        private int arrivalTick;
+        private int passengerNumber;
+
 
         // constructor method to create a new passenger
-        public Passenger(int id, int startingFloor, int destinationFloor, int arrivalTick) {
+        public Passenger(int passengerNumber, int startingFloor, int destinationFloor) {
             this.startingFloor = startingFloor;
             this.destinationFloor = destinationFloor;
-            this.id = id;
-            this.arrivalTick = arrivalTick;
+            this.passengerNumber = passengerNumber;
         }
 
         // getter methods
-        public int getId() {
-            return id;
+        public int getPassengerNumber() {
+            return passengerNumber;
         }
 
         public int getStartingFloor() {
