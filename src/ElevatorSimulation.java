@@ -48,7 +48,7 @@ public class ElevatorSimulation {
         }
     }
 
-    static class Passenger {
+    class Passenger {
 
         private int startingFloor;
         private int destinationFloor;
@@ -73,6 +73,25 @@ public class ElevatorSimulation {
 
         public int getDestinationFloor() {
             return destinationFloor;
+        }
+    }
+
+    class Floors {
+
+        private int numFloors;
+        private int numElevators;
+
+        // constructor method to create number of floors
+        public Floors(int numFloors, int numElevators, int capacity) {
+            this.numFloors = numFloors;
+            this.numElevators = numElevators;
+
+
+        }
+
+        // method for getting the number of floors
+        public int getNumFloors(int numFloors) {
+            return numFloors;
         }
     }
 
