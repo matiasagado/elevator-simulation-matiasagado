@@ -10,19 +10,24 @@ public class ElevatorSimulation {
         private Queue<Passenger> passengers;
 
         // constructor method to create an elevator
-        public Elevator(int capacity, int currentFloor) {
+        public Elevator(int capacity) {
             this.capacity = capacity;
-            this.currentFloor = currentFloor; // this.currentFloor = 0 if this doesn't work
+            this.currentFloor = 0;                        // elevator starts at the ground-floor
             this.passengers = new LinkedList<>();
         }
 
         // Method to check if the elevator is at capacity.
-        public boolean isAtCapacity() {
-            return passengers.size() >= capacity;
+        public boolean isFull() {
+
+            boolean full = false;
+            if(passengers.size() >= capacity) {
+                full = true;
+            }
+            return full;
         }
 
         // Method to move the elevator to a new floor.
-        public void moveToFloor(int floor) {
+        public void moveFloor(int floor) {
             currentFloor = floor;
         }
 
