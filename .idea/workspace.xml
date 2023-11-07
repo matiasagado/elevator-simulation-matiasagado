@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9fb97a65-87c6-4cf6-bd7f-fd6717312489" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+    <list default="true" id="9fb97a65-87c6-4cf6-bd7f-fd6717312489" name="Changes" comment="Initial Commit">
+      <change beforePath="$PROJECT_DIR$/src/ElevatorSimulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ElevatorSimulation.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +40,37 @@
       <option name="presentableId" value="Default" />
       <updated>1699321202011</updated>
     </task>
+    <task id="LOCAL-00001" summary="test1">
+      <option name="closed" value="true" />
+      <created>1699321949048</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1699321949049</updated>
+    </task>
+    <task id="LOCAL-00002" summary="test2">
+      <option name="closed" value="true" />
+      <created>1699322051904</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1699322051904</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Initial Commit">
+      <option name="closed" value="true" />
+      <created>1699322534889</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1699322534889</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="test1" />
+    <MESSAGE value="test2" />
+    <MESSAGE value="Initial Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit" />
   </component>
 </project>
