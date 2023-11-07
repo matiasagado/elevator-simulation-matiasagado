@@ -4,6 +4,7 @@ import java.util.*;
 public class ElevatorSimulation {
 
     class Elevator {
+
         private int capacity;
         private int currentFloor;
         private Queue<Passenger> passengers;
@@ -43,6 +44,7 @@ public class ElevatorSimulation {
     }
 
     class Passenger {
+
         private int startingFloor;
         private int destinationFloor;
         private int id;
