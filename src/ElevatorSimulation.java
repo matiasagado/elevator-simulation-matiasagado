@@ -8,7 +8,40 @@ public class ElevatorSimulation {
         private int currentFloor;
         private Queue<Passenger> passengers;
 
+        // constructor method to create an elevator
+        public Elevator(int capacity, int currentFloor) {
+            this.capacity = capacity;
+            this.currentFloor = currentFloor; // this.currentFloor = 0 if this doesn't work
+            this.passengers = new LinkedList<>();
+        }
+
+        // Method to check if the elevator is at capacity.
+        public boolean isAtCapacity() {
+            return passengers.size() >= capacity;
+        }
+
+        // Method to move the elevator to a new floor.
+        public void moveToFloor(int floor) {
+            currentFloor = floor;
+        }
+
+        // method to load a passenger onto the elevator.
+        public void loadPassenger(Passenger passenger) {
+            passengers.add(passenger);
+        }
+
+        // method to unload passengers at their destination
+        public void unloadPassenger() {
+            Iterator<Passenger> i = passengers.iterator();
+            while (i.hasNext()) {
+                Passenger passenger = i.next();
+                if (passenger.getDestinationFloor() == currentFloor) {
+                    i.remove();
+                }
+            }
+        }
     }
+
     class Passenger {
         private int startingFloor;
         private int destinationFloor;
@@ -40,6 +73,7 @@ public class ElevatorSimulation {
             return arrivalTick;
         }
     }
+
     public static void main(String[] args) {
 
         // default values
