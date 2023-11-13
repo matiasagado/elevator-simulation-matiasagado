@@ -1,5 +1,6 @@
-import java.io.FileInputStream;
 import java.util.*;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class ElevatorSimulation {
 
@@ -79,14 +80,37 @@ public class ElevatorSimulation {
     class Floors {
 
         private int numFloors;
-        private int numElevators;
+        private List<Elevator> numElevators;
+        private List<Queue<Passenger>> floorQueue;
 
         // constructor method to create number of floors
         public Floors(int numFloors, int numElevators, int capacity) {
             this.numFloors = numFloors;
-            this.numElevators = numElevators;
+            this.numElevators = new ArrayList<Elevator>();
+
+            // initialize number of elevators
+            for ( int i = 0; i < numElevators; i++) {
+                this.numElevators.add(new Elevator(capacity));
+            }
+
+            // initialize queue for passengers on each floor
+            for(int i = 0; i < numFloors; i++) {
+                this.floorQueue.add(new LinkedList<>());
+            }
+
+        }
+        // method for getting floor queues
+        public List<Queue<Passenger>> getFloorQueue() {
+            return floorQueue;
+        }
+
+        // method to add a passenger to elevator queue from floor queue
 
 
+
+        // method for getting the number of elevators
+        public List<Elevator> getNumElevators() {
+            return numElevators;
         }
 
         // method for getting the number of floors
@@ -104,7 +128,23 @@ public class ElevatorSimulation {
         int elevatorCapacity = 10;
         int duration = 500;
 
+        // check to see if property file is given
+        if (args.length > 0) {
+            try {
+                FileInputStream fileInput = new FileInputStream(args[0]);
+                Properties properties = new Properties();
+                properties.load(fileInput);
 
+                fileInput.close();
+            } catch (IOException e) {
+                System.err.println("Error: Couldn't read property file.");
+            }
+        }
 
+        // create simulation instance
+
+        // run the simulation
+
+        // print results
     }
 }
