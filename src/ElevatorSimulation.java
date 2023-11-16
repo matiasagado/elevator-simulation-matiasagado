@@ -1,72 +1,32 @@
 import java.util.*;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class ElevatorSimulation {
-
-    class Elevator {
-
-        private int capacity;
-        private int currentFloor;
-        private Queue<Passenger> passengers;
-
-        // constructor method to create an elevator
-        public Elevator(int capacity) {
-            this.capacity = capacity;
-            this.currentFloor = 0;                        // elevator starts at the ground-floor
-            this.passengers = new LinkedList<>();
-        }
-
-        // Method to check if the elevator is full.
-        public boolean isFull() {
-
-            boolean full = false;
-            if(passengers.size() >= capacity) {
-                full = true;
-            }
-            return full;
-        }
-
-        // Method to move the elevator to a new floor.
-        public void moveFloor(int floor) {
-            currentFloor = floor;
-        }
-
-        // method to load a passenger onto the elevator.
-        public void loadPassenger(Passenger passenger) {
-            passengers.add(passenger);
-        }
-
-        // method to unload passengers at their destination
-        public void unloadPassengers() {
-            Iterator<Passenger> i = passengers.iterator();
-            while (i.hasNext()) {
-                Passenger passenger = i.next();
-                if (passenger.getDestinationFloor() == currentFloor) {
-                    i.remove();
-                }
-            }
-        }
-    }
 
     class Passenger {
 
         private int startingFloor;
         private int destinationFloor;
-        private int passengerNumber;
+        private int id;
+        private long arrivalTime;
 
-
-        // constructor method to create a new passenger
-        public Passenger(int passengerNumber, int startingFloor, int destinationFloor) {
+        public Passenger(int startingFloor, int destinationFloor, int id) {
             this.startingFloor = startingFloor;
             this.destinationFloor = destinationFloor;
-            this.passengerNumber = passengerNumber;
+            this.id = id;
+            arrivalTime = System.currentTimeMillis();
         }
 
-        // getter methods
-        public int getPassengerNumber() {
-            return passengerNumber;
+        public long arriveFloor(){
+            return System.currentTimeMillis() - arrivalTime;
         }
+
+        public int getDirection() {
+            // 1 is for going up, -1 is for going down
+            return startingFloor < destinationFloor ? 1 : -1;
+        }
+
+        // Getter Methods
 
         public int getStartingFloor() {
             return startingFloor;
@@ -75,76 +35,158 @@ public class ElevatorSimulation {
         public int getDestinationFloor() {
             return destinationFloor;
         }
+
+        public long getArrivalTime() {
+            return arrivalTime;
+        }
+
+        // Setter Methods
+
+        public void setStartingFloor(int startingFloor) {
+            this.startingFloor = startingFloor;
+        }
+
+        public void setDestinationFloor(int destinationFloor) {
+            this.destinationFloor = destinationFloor;
+        }
+
+        public void setArrivalTime(long arrivalTime) {
+            this.arrivalTime = arrivalTime;
+        }
     }
 
-    class Floors {
+    class Elevator {
 
+        private List<Passenger> passengersList;
+        private String structure;
         private int numFloors;
-        private List<Elevator> numElevators;
-        private List<Queue<Passenger>> floorQueue;
+        private int currentFloor;
+        private int capacity;
+        private int direction;
 
-        // constructor method to create number of floors
-        public Floors(int numFloors, int numElevators, int capacity) {
+        private final int eUP = 1;
+        private final int eDOWN = -1;
+        private final int duration = 1;
+
+        public Elevator(String structure, int numFloors, int capacity) {
+            this.passengersList = "linked".equals(structure) ? new LinkedList<>() : new ArrayList<>();
+            this.structure = structure;
             this.numFloors = numFloors;
-            this.numElevators = new ArrayList<Elevator>();
-
-            // initialize number of elevators
-            for ( int i = 0; i < numElevators; i++) {
-                this.numElevators.add(new Elevator(capacity));
-            }
-
-            // initialize queue for passengers on each floor
-            for(int i = 0; i < numFloors; i++) {
-                this.floorQueue.add(new LinkedList<>());
-            }
-
-        }
-        // method for getting floor queues
-        public List<Queue<Passenger>> getFloorQueue() {
-            return floorQueue;
+            this.currentFloor = 1; // 1 for 1st floor
+            this.capacity = capacity;
+            this.direction = 0; // 0 is idle
         }
 
-        // method to add a passenger to elevator queue from floor queue
+        // method to move the elevator's direction
+        public int moveElevatorTo(int destinationFloor, int remain) {
+            // Determine the direction of movement
+            this.direction = Integer.compare(destinationFloor, currentFloor);
 
+            // Calculate the number of steps to move
+            int numSteps = Math.min(Math.abs(currentFloor - destinationFloor), remain);
 
+            // Update the current floor
+            currentFloor += numSteps * direction;
 
-        // method for getting the number of elevators
-        public List<Elevator> getNumElevators() {
-            return numElevators;
-        }
+            // Adjust direction when reaching the top or bottom floor
+            if (currentFloor == 0)
+                direction = eUP;
 
-        // method for getting the number of floors
-        public int getNumFloors(int numFloors) {
-            return numFloors;
-        }
-    }
+            if (currentFloor == numFloors - 1)
+                direction = eDOWN;
 
-    public static void main(String[] args) {
-
-        // default values
-        int numFloors = 32;
-        double passengerProbability = 0.03;
-        int numElevators = 1;
-        int elevatorCapacity = 10;
-        int duration = 500;
-
-        // check to see if property file is given
-        if (args.length > 0) {
+            // Introduce a delay based on the number of steps
             try {
-                FileInputStream fileInput = new FileInputStream(args[0]);
-                Properties properties = new Properties();
-                properties.load(fileInput);
-
-                fileInput.close();
-            } catch (IOException e) {
-                System.err.println("Error: Couldn't read property file.");
+                Thread.sleep(numSteps * duration);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
+
+            return numSteps;
         }
 
-        // create simulation instance
+        /*
+         * move the elevator up or down based on 'direction'
+         * change direction if elevator reaches the top or bottom
+         */
+        public void moveElevator() {
 
-        // run the simulation
+            try {
+                Thread.sleep(duration);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
-        // print results
+            currentFloor += direction;
+
+            if(currentFloor == 0)
+                direction = eUP;
+
+            if(currentFloor == numFloors - 1)
+                direction = eDOWN;
+        }
+
+        // method to add passenger to elevator if capacity is not reached
+        public List<Passenger> loadPassenger(List<Passenger> waitingPassengers) {
+
+            List<Passenger> loadPassengers;
+            if(this.structure.equals("linked"))
+                loadPassengers = new LinkedList<>();
+            else
+                loadPassengers = new ArrayList<>();
+
+            for (Passenger passenger : waitingPassengers) {
+                if (isFull()) {
+                    break;
+                }
+
+                int passengerDirection = passenger.getDirection();
+
+                if (passengerDirection == direction || direction == 0) {
+                    direction = passengerDirection;
+                    loadPassengers.add(passenger);
+                    passengersList.add(passenger);
+                }
+            }
+            return loadPassengers;
+        }
+
+        // method to remove passenger from the elevator
+        public List<Passenger> unloadPassenger() {
+
+            List<Passenger> arrivalPassengers;
+            if(this.structure.equals("linked"))
+                arrivalPassengers = new LinkedList<>();
+            else
+                arrivalPassengers = new ArrayList<>();
+
+            for(Passenger p: passengersList){
+                if(p.getDestinationFloor() == this.currentFloor){
+                    arrivalPassengers.add(p);
+                }
+            }
+            for(Passenger p : arrivalPassengers)
+                passengersList.remove(p);
+            if(isEmpty())
+                this.direction = 0;
+            return arrivalPassengers;
+        }
+
+        public boolean isFull() {
+            // return true if elevator capacity is reached
+            return passengersList.size() >= capacity;
+        }
+        public boolean isEmpty() {
+            // return true if elevator capacity is reached
+            return passengersList.size() == 0;
+        }
+
+        public int getCurrentFloor(){
+            return this.currentFloor;
+        }
+
+        public int getDirection(){
+            return this.direction;
+        }
     }
 }
