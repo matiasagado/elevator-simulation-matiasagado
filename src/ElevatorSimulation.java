@@ -25,7 +25,6 @@ public class ElevatorSimulation {
         }
 
         public int getDirection() {
-            // 1 is for going up, -1 is for going down
             return startingFloor < destinationFloor ? eUP : eDown;
         }
 
