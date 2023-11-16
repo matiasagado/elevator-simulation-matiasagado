@@ -58,7 +58,7 @@ public class ElevatorSimulation {
     class Elevator {
 
         private List<Passenger> passengersList;
-        private String structure;
+        private String dataStructure;
         private int numFloors;
         private int currentFloor;
         private int capacity;
@@ -68,9 +68,9 @@ public class ElevatorSimulation {
         private final int eDOWN = -1;
         private final int duration = 1;
 
-        public Elevator(String structure, int numFloors, int capacity) {
+        public Elevator(String dataStructure, int numFloors, int capacity) {
             this.passengersList = "linked".equals(structure) ? new LinkedList<>() : new ArrayList<>();
-            this.structure = structure;
+            this.dataStructure = dataStructure;
             this.numFloors = numFloors;
             this.currentFloor = 1; // 1 for 1st floor
             this.capacity = capacity;
@@ -130,7 +130,7 @@ public class ElevatorSimulation {
         public List<Passenger> loadPassenger(List<Passenger> waitingPassengers) {
 
             List<Passenger> loadPassengers;
-            if(this.structure.equals("linked"))
+            if(this.dataStructure.equals("linked"))
                 loadPassengers = new LinkedList<>();
             else
                 loadPassengers = new ArrayList<>();
@@ -155,20 +155,24 @@ public class ElevatorSimulation {
         public List<Passenger> unloadPassenger() {
 
             List<Passenger> arrivalPassengers;
-            if(this.structure.equals("linked"))
+
+            if(this.dataStructure.equals("linked"))
                 arrivalPassengers = new LinkedList<>();
             else
                 arrivalPassengers = new ArrayList<>();
 
-            for(Passenger p: passengersList){
-                if(p.getDestinationFloor() == this.currentFloor){
-                    arrivalPassengers.add(p);
+            for(Passenger passenger: passengersList){
+                if(passenger.getDestinationFloor() == this.currentFloor){
+                    arrivalPassengers.add(passenger);
                 }
             }
-            for(Passenger p : arrivalPassengers)
-                passengersList.remove(p);
+
+            for(Passenger passenger : arrivalPassengers)
+                passengersList.remove(passenger);
+
             if(isEmpty())
                 this.direction = 0;
+
             return arrivalPassengers;
         }
 
@@ -176,6 +180,7 @@ public class ElevatorSimulation {
             // return true if elevator capacity is reached
             return passengersList.size() >= capacity;
         }
+
         public boolean isEmpty() {
             // return true if elevator capacity is reached
             return passengersList.size() == 0;
