@@ -10,6 +10,9 @@ public class ElevatorSimulation {
         private int id;
         private long arrivalTime;
 
+        private final int eUP = 1; // elevator going up
+        private final int eDown = -1; // elevator going down
+
         public Passenger(int startingFloor, int destinationFloor, int id) {
             this.startingFloor = startingFloor;
             this.destinationFloor = destinationFloor;
@@ -23,7 +26,7 @@ public class ElevatorSimulation {
 
         public int getDirection() {
             // 1 is for going up, -1 is for going down
-            return startingFloor < destinationFloor ? 1 : -1;
+            return startingFloor < destinationFloor ? eUP : eDown;
         }
 
         // Getter Methods
@@ -65,6 +68,7 @@ public class ElevatorSimulation {
         private int direction;
 
         private final int eUP = 1;
+        private final int eIDLE = 0;
         private final int eDOWN = -1;
         private final int duration = 1;
 
@@ -72,9 +76,9 @@ public class ElevatorSimulation {
             this.passengersList = "linked".equals(structure) ? new LinkedList<>() : new ArrayList<>();
             this.dataStructure = dataStructure;
             this.numFloors = numFloors;
-            this.currentFloor = 1; // 1 for 1st floor
+            this.currentFloor = 1; // 1 for ground-floor
             this.capacity = capacity;
-            this.direction = 0; // 0 is idle
+            this.direction = eIDLE;
         }
 
         // method to move the elevator's direction
@@ -177,12 +181,10 @@ public class ElevatorSimulation {
         }
 
         public boolean isFull() {
-            // return true if elevator capacity is reached
             return passengersList.size() >= capacity;
         }
 
         public boolean isEmpty() {
-            // return true if elevator capacity is reached
             return passengersList.size() == 0;
         }
 
