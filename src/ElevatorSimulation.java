@@ -353,7 +353,7 @@ public class ElevatorSimulation {
 
                     Elevator currentElevator = elevatorList.get(i);
                     int tick = 5;
-                    int destFloor = 0;
+                    int destinationFloor = 0;
 
                     while (tick > 0) {
 
@@ -361,25 +361,31 @@ public class ElevatorSimulation {
 
                         List<Passenger> floorPassenger = floorPassengerList.get(currentElevator.getCurrentFloor());
                         loadPassenger(currentElevator, floorPassenger);
+                        
+                        tick = findClosestPassenger(currentElevator, tick);
 
-                        if(currentElevator.isEmpty()){
-                            //find nearest waiting passenger
-                            destFloor = findNearestPassenger(currentElevator.getCurrentFloor(), currentElevator.getDirection());
-                            if(destFloor > -1){
-                                int nMove = currentElevator.moveElevatorTo(destFloor, tick);
-                                tick -= nMove;
-                            }
-                            else{
-                                tick = 0;
-                            }
-                        }
-                        else{
-                            currentElevator.moveElevator();
-                            tick--;
-                        }
                     }
                 }
             }
+        }
+
+        private int findClosestPassenger(Elevator currentElevator, int tick) {
+            if (!currentElevator.isEmpty()) {
+                currentElevator.moveElevator();
+                tick--;
+            }
+            if (currentElevator.isEmpty()) {
+                //find nearest waiting passenger
+                int destinationFloor = findNearestPassenger(currentElevator.getCurrentFloor(), currentElevator.getDirection());
+                if (destinationFloor <= 1) {
+                    tick = 0;
+                }
+                if (destinationFloor > 1) {
+                    int nMove = currentElevator.moveElevatorTo(destinationFloor, tick);
+                    tick -= nMove;
+                }
+            }
+            return tick;
         }
 
         private void loadPassenger(Elevator currentElevator, List<Passenger> floorPassenger) {
@@ -403,11 +409,11 @@ public class ElevatorSimulation {
         public void reportResults() {
 
             long shortestTime = Long.MAX_VALUE;
-            long avgTime = 0;
+            long averageTime = 0;
             long longestTime = 0;
 
             for (Long time : listOfTimes){
-                avgTime += time;
+                averageTime += time;
                 if (shortestTime > time)
                     shortestTime = time;
                 if (time > longestTime)
@@ -415,10 +421,10 @@ public class ElevatorSimulation {
             }
 
             if (listOfTimes.size() >  0) {
-                avgTime = avgTime / listOfTimes.size();
+                averageTime /= listOfTimes.size();
             }
 
-            System.out.println("\nAverage travel time of passengers: " + avgTime + " ms.");
+            System.out.println("\nAverage travel time of passengers: " + averageTime + " ms.");
             System.out.println("Longest travel time of passenger: " + longestTime + " ms.");
             System.out.println("Shortest travel time of passenger: " + shortestTime + " ms.");
         }
