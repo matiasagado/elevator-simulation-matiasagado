@@ -42,7 +42,7 @@ The program consists of the following classes:
 - Manages elevators, floor passenger lists, and simulation parameters.
 - Generates passengers, moves elevators, and reports simulation results.
   
-##### ElevatorSimulation
+#### ElevatorSimulation
 - Main class containing the main method to run the elevator simulation.
 - Parses command-line arguments for configuration file (optional).
 - Creates a Simulation object, runs the simulation, and reports the results.
