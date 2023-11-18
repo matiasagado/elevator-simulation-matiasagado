@@ -1,9 +1,8 @@
 import java.util.*;
 import java.io.*;
 
+// Enumeration for elevator directions
 enum EDirection {
-    // used in Elevator/ Passenger Classes;
-
     UP(1),
     IDLE(0),
     DOWN(-1);
@@ -17,6 +16,7 @@ enum EDirection {
 
 public class ElevatorSimulation {
 
+    // Inner class representing a passenger
     static class Passenger {
 
         private int startingFloor;
@@ -24,6 +24,7 @@ public class ElevatorSimulation {
         private int id;
         private long arrivalTime;
 
+        // Constructor for creating a passenger
         public Passenger(int startingFloor, int destinationFloor, int id) {
             this.startingFloor = startingFloor;
             this.destinationFloor = destinationFloor;
@@ -31,16 +32,17 @@ public class ElevatorSimulation {
             arrivalTime = System.currentTimeMillis();
         }
 
+        // Method to calculate time taken by the passenger to reach the destination floor
         public long arriveFloor(){
             return System.currentTimeMillis() - arrivalTime;
         }
 
+        // Method to determine the direction of the passenger's travel
         public int getDirection() {
             return (startingFloor < destinationFloor ? EDirection.UP.direction : EDirection.DOWN.direction);
         }
 
-        // Getter Methods
-
+        // Getter methods
         public int getStartingFloor() {
             return startingFloor;
         }
@@ -53,8 +55,7 @@ public class ElevatorSimulation {
             return arrivalTime;
         }
 
-        // Setter Methods
-
+        // Setter methods
         public void setStartingFloor(int startingFloor) {
             this.startingFloor = startingFloor;
         }
@@ -68,6 +69,7 @@ public class ElevatorSimulation {
         }
     }
 
+    // Inner class representing an elevator
     static class Elevator {
 
         private List<Passenger> passengersList;
@@ -81,6 +83,7 @@ public class ElevatorSimulation {
 
         private final int duration = 1;
 
+        // Constructor for creating an elevator
         public Elevator(String dataStructure, int numFloors, int capacity) {
             this.passengersList = "linked".equals(dataStructure) ? new LinkedList<>() : new ArrayList<>();
             this.dataStructure = dataStructure;
@@ -90,7 +93,7 @@ public class ElevatorSimulation {
             this.direction = EDirection.IDLE.direction;
         }
 
-        // method to move the elevator's direction
+        // Method to move the elevator's direction to a specified destination floor
         public int moveElevatorTo(int destinationFloor, int remain) {
             // Determine the direction of movement
             this.direction = Integer.compare(destinationFloor, currentFloor);
@@ -118,10 +121,8 @@ public class ElevatorSimulation {
             return numSteps;
         }
 
-        /*
-         * move the elevator up or down based on 'direction'
-         * change direction if elevator reaches the top or bottom
-         */
+        // Method to move the elevator up or down based on 'direction'
+        // Change direction if the elevator reaches the top or bottom
         public void moveElevator() {
 
             try {
@@ -139,7 +140,7 @@ public class ElevatorSimulation {
                 direction = EDirection.DOWN.direction;
         }
 
-        // method to add passenger to elevator if capacity is not reached
+        // Method to add passenger to elevator if capacity is not reached
         public List<Passenger> loadPassenger(List<Passenger> waitingPassengers) {
 
             List<Passenger> loadPassengers;
@@ -161,7 +162,7 @@ public class ElevatorSimulation {
             return loadPassengers;
         }
 
-        // method to remove passenger from the elevator
+        // Method to remove passenger from the elevator
         public List<Passenger> unloadPassenger() {
 
             List<Passenger> arrivalPassengers;
@@ -183,25 +184,29 @@ public class ElevatorSimulation {
             return arrivalPassengers;
         }
 
+        // Check if the elevator is full
         public boolean isFull() {
             return passengersList.size() >= capacity;
         }
 
+        // Check if the elevator is empty
         public boolean isEmpty() {
             return passengersList.isEmpty();
         }
 
+        // Get the current floor of the elevator
         public int getCurrentFloor(){
             return this.currentFloor;
         }
 
+        // Get the direction of the elevator
         public int getDirection(){
             return this.direction;
         }
     }
 
+    // Enumeration used in Simulation Class
     enum SimulationPassenger {
-        // used in Simulation Class
 
         COUNT(0),
         INDEX(1);
@@ -212,6 +217,7 @@ public class ElevatorSimulation {
         }
     }
 
+    // Main simulation class
     static class Simulation {
 
         private List<Long> listOfTimes;
@@ -225,6 +231,7 @@ public class ElevatorSimulation {
         private int elevatorCapacity;
         private int duration;
 
+        // Default constructor with default values
         public Simulation() {
             dataStructure = "linked";
             floors = 32;
@@ -234,6 +241,7 @@ public class ElevatorSimulation {
             duration = 500;
         }
 
+        // Constructor to initialize simulation parameters from a configuration file
         public Simulation(String configFile) {
 
             Properties config = new Properties();
@@ -264,6 +272,8 @@ public class ElevatorSimulation {
             elevatorCapacity = (elevatorCapacity < 1) ? 10 : elevatorCapacity;
             duration = (duration < 1) ? 500 : duration;
         }
+
+        // Find the nearest waiting passenger on the same direction
         private int findNearestPassenger(int currentFloor, int direction) {
             int minDistance = floors;
             int destinationFloor = -1;
@@ -288,6 +298,7 @@ public class ElevatorSimulation {
             return destinationFloor;
         }
 
+        // Run the simulation
         public void runSimulation() {
 
             if (dataStructure.equals("linked")) {
@@ -327,6 +338,7 @@ public class ElevatorSimulation {
 
         }
 
+        // Generate passengers based on random probability
         private void generatePassenger(Random rand) {
 
             double passengerProb;
@@ -346,6 +358,7 @@ public class ElevatorSimulation {
             }
         }
 
+        // Move elevators and passengers
         private void moveElevator() {
 
             if (SimulationPassenger.COUNT.value > 0) {
@@ -361,7 +374,7 @@ public class ElevatorSimulation {
 
                         List<Passenger> floorPassenger = floorPassengerList.get(currentElevator.getCurrentFloor());
                         loadPassenger(currentElevator, floorPassenger);
-                        
+
                         tick = findClosestPassenger(currentElevator, tick);
 
                     }
@@ -369,13 +382,14 @@ public class ElevatorSimulation {
             }
         }
 
+        // Find the closest passenger and move the elevator towards them
         private int findClosestPassenger(Elevator currentElevator, int tick) {
             if (!currentElevator.isEmpty()) {
                 currentElevator.moveElevator();
                 tick--;
             }
             if (currentElevator.isEmpty()) {
-                //find nearest waiting passenger
+                // Find nearest waiting passenger
                 int destinationFloor = findNearestPassenger(currentElevator.getCurrentFloor(), currentElevator.getDirection());
                 if (destinationFloor <= 1) {
                     tick = 0;
@@ -388,6 +402,7 @@ public class ElevatorSimulation {
             return tick;
         }
 
+        // Load passengers into the elevator
         private void loadPassenger(Elevator currentElevator, List<Passenger> floorPassenger) {
             if(!currentElevator.isFull() && floorPassenger.size() > 0){
                 List<Passenger> loadPassengers = currentElevator.loadPassenger(floorPassenger);
@@ -397,6 +412,7 @@ public class ElevatorSimulation {
             }
         }
 
+        // Unload passengers from the elevator
         private void unloadPassenger(Elevator currentElevator) {
             if(!currentElevator.isEmpty()){
                 List<Passenger> arrivedPassengers = currentElevator.unloadPassenger();
@@ -406,6 +422,7 @@ public class ElevatorSimulation {
             }
         }
 
+        // Report simulation results
         public void reportResults() {
 
             long shortestTime = Long.MAX_VALUE;
@@ -430,6 +447,7 @@ public class ElevatorSimulation {
         }
     }
 
+    // Main method
     public static void main(String[] args) {
 
         Simulation simulation;
