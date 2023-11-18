@@ -42,31 +42,11 @@ public class ElevatorSimulation {
             return (startingFloor < destinationFloor ? EDirection.UP.direction : EDirection.DOWN.direction);
         }
 
-        // Getter methods
-        public int getStartingFloor() {
-            return startingFloor;
-        }
-
+        // Getter method
         public int getDestinationFloor() {
             return destinationFloor;
         }
 
-        public long getArrivalTime() {
-            return arrivalTime;
-        }
-
-        // Setter methods
-        public void setStartingFloor(int startingFloor) {
-            this.startingFloor = startingFloor;
-        }
-
-        public void setDestinationFloor(int destinationFloor) {
-            this.destinationFloor = destinationFloor;
-        }
-
-        public void setArrivalTime(long arrivalTime) {
-            this.arrivalTime = arrivalTime;
-        }
     }
 
     // Inner class representing an elevator
@@ -274,7 +254,7 @@ public class ElevatorSimulation {
         }
 
         // Find the nearest waiting passenger on the same direction
-        private int findNearestPassenger(int currentFloor, int direction) {
+        private int findPassenger(int currentFloor, int direction) {
             int minDistance = floors;
             int destinationFloor = -1;
 
@@ -286,10 +266,10 @@ public class ElevatorSimulation {
                 int currentDirection = Integer.compare(currentFloor, i);
 
                 if (direction == 0 || currentDirection == direction) {
-                    int curDis = Math.abs(currentFloor - i);
+                    int currentDistance = Math.abs(currentFloor - i);
 
-                    if (curDis < minDistance) {
-                        minDistance = curDis;
+                    if (currentDistance < minDistance) {
+                        minDistance = currentDistance;
                         destinationFloor = i;
                     }
                 }
@@ -390,7 +370,7 @@ public class ElevatorSimulation {
             }
             if (currentElevator.isEmpty()) {
                 // Find nearest waiting passenger
-                int destinationFloor = findNearestPassenger(currentElevator.getCurrentFloor(), currentElevator.getDirection());
+                int destinationFloor = findPassenger(currentElevator.getCurrentFloor(), currentElevator.getDirection());
                 if (destinationFloor <= 1) {
                     tick = 0;
                 }
@@ -406,8 +386,8 @@ public class ElevatorSimulation {
         private void loadPassenger(Elevator currentElevator, List<Passenger> floorPassengers) {
             if(!currentElevator.isFull() && floorPassengers.size() > 0){
                 List<Passenger> loadPassengers = currentElevator.loadPassenger(floorPassengers);
-                for(Passenger p: loadPassengers){
-                    floorPassengers.remove(p);
+                for(Passenger passenger: loadPassengers){
+                    floorPassengers.remove(passenger);
                 }
             }
         }
@@ -416,8 +396,8 @@ public class ElevatorSimulation {
         private void unloadPassenger(Elevator currentElevator) {
             if(!currentElevator.isEmpty()){
                 List<Passenger> arrivedPassengers = currentElevator.unloadPassenger();
-                for(Passenger p: arrivedPassengers){
-                    listOfTimes.add(p.arriveFloor());
+                for(Passenger passenger: arrivedPassengers){
+                    listOfTimes.add(passenger.arriveFloor());
                 }
             }
         }
