@@ -47,7 +47,7 @@ The program consists of the following classes:
 ## Usage
 To run the elevator simulation, execute the main method in the ElevatorSimulation class. Optionally, you can provide a configuration file as a command-line argument.
 
-`java ElevatorSimulation [configFile]`
+    java ElevatorSimulation [configFile]
 
 ## Configuration
 
