@@ -22,13 +22,13 @@ The program consists of the following classes:
 
 ## Classes
 
-### EDirection
+#### EDirection
 
 - Represents elevator directions: UP, IDLE, DOWN.
 - Defines constants for each direction and their associated integer values.
 - Used in Elevator and Passenger classes.
   
-### Passenger
+#### Passenger
 - Represents a passenger in the elevator system.
 - Stores starting floor, destination floor, ID, and arrival time.
 - Provides methods to calculate arrival floor and determine passenger direction.
