@@ -19,3 +19,11 @@ The program consists of the following classes:
 - SimulationPassenger: An enumeration used in the simulation for passenger counting and indexing.
 - Simulation: Orchestrates the elevator simulation, including passenger generation, elevator movement, and reporting results.
 - ElevatorSimulation: The main class containing the main method to run the simulation.
+
+## Classes
+
+  ### EDirection
+
+    - Represents elevator directions: UP, IDLE, DOWN.
+    - Defines constants for each direction and their associated integer values.
+    - Used in Elevator and Passenger classes.
