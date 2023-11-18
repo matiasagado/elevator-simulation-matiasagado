@@ -263,7 +263,7 @@ public class ElevatorSimulation {
                 duration = Integer.parseInt(config.getProperty("duration"));
 
             } catch (Exception e) {
-
+                System.err.println("Error: " + e);
             }
 
             floors = (floors < 2) ? 32 : floors;
