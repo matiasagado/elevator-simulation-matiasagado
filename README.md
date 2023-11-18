@@ -27,3 +27,21 @@ The program consists of the following classes:
     - Represents elevator directions: UP, IDLE, DOWN.
     - Defines constants for each direction and their associated integer values.
     - Used in Elevator and Passenger classes.
+  ### Passenger
+    - Represents a passenger in the elevator system.
+    - Stores starting floor, destination floor, ID, and arrival time.
+    - Provides methods to calculate arrival floor and determine passenger direction.
+
+  ### SimulationPassenger
+    - Enumeration used in the simulation for passenger counting and indexing.
+    - Includes constants for COUNT and INDEX values.
+  ### Simulation
+    - Orchestrates the elevator simulation.
+    - Manages elevators, floor passenger lists, and simulation parameters.
+    - Generates passengers, moves elevators, and reports simulation results.
+  ### ElevatorSimulation
+    - Main class containing the main method to run the elevator simulation.
+    - Parses command-line arguments for configuration file (optional).
+    - Creates a Simulation object, runs the simulation, and reports the results.
+
+## Usage
