@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9fb97a65-87c6-4cf6-bd7f-fd6717312489" name="Changes" comment="working" />
+    <list default="true" id="9fb97a65-87c6-4cf6-bd7f-fd6717312489" name="Changes" comment="documentation">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ElevatorSimulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ElevatorSimulation.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -175,7 +178,23 @@
       <option name="project" value="LOCAL" />
       <updated>1700302265584</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="documentation">
+      <option name="closed" value="true" />
+      <created>1700302747802</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1700302747802</updated>
+    </task>
+    <task id="LOCAL-00019" summary="documentation">
+      <option name="closed" value="true" />
+      <created>1700304386313</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1700304386313</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -187,6 +206,7 @@
     <MESSAGE value="part of Floors class" />
     <MESSAGE value="file io" />
     <MESSAGE value="working" />
-    <option name="LAST_COMMIT_MESSAGE" value="working" />
+    <MESSAGE value="documentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="documentation" />
   </component>
 </project>

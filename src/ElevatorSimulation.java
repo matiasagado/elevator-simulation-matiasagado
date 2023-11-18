@@ -372,8 +372,8 @@ public class ElevatorSimulation {
 
                         unloadPassenger(currentElevator);
 
-                        List<Passenger> floorPassenger = floorPassengerList.get(currentElevator.getCurrentFloor());
-                        loadPassenger(currentElevator, floorPassenger);
+                        List<Passenger> floorPassengers = floorPassengerList.get(currentElevator.getCurrentFloor());
+                        loadPassenger(currentElevator, floorPassengers);
 
                         tick = findClosestPassenger(currentElevator, tick);
 
@@ -403,11 +403,11 @@ public class ElevatorSimulation {
         }
 
         // Load passengers into the elevator
-        private void loadPassenger(Elevator currentElevator, List<Passenger> floorPassenger) {
-            if(!currentElevator.isFull() && floorPassenger.size() > 0){
-                List<Passenger> loadPassengers = currentElevator.loadPassenger(floorPassenger);
+        private void loadPassenger(Elevator currentElevator, List<Passenger> floorPassengers) {
+            if(!currentElevator.isFull() && floorPassengers.size() > 0){
+                List<Passenger> loadPassengers = currentElevator.loadPassenger(floorPassengers);
                 for(Passenger p: loadPassengers){
-                    floorPassenger.remove(p);
+                    floorPassengers.remove(p);
                 }
             }
         }
@@ -425,16 +425,16 @@ public class ElevatorSimulation {
         // Report simulation results
         public void reportResults() {
 
-            long shortestTime = Long.MAX_VALUE;
             long averageTime = 0;
             long longestTime = 0;
+            long shortestTime = Long.MAX_VALUE;
 
             for (Long time : listOfTimes){
                 averageTime += time;
-                if (shortestTime > time)
-                    shortestTime = time;
                 if (time > longestTime)
                     longestTime = time;
+                if (shortestTime > time)
+                    shortestTime = time;
             }
 
             if (listOfTimes.size() >  0) {
