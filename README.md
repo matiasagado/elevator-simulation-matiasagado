@@ -45,3 +45,32 @@ The program consists of the following classes:
     - Creates a Simulation object, runs the simulation, and reports the results.
 
 ## Usage
+To run the elevator simulation, execute the main method in the ElevatorSimulation class. Optionally, you can provide a configuration file as a command-line argument.
+
+`java ElevatorSimulation [configFile]`
+
+## Configuration
+
+The program can be configured using a properties file. The default configuration is used if no file is provided.
+
+Default Configuration:
+
+- Floors: 32
+- Passengers: 0.03
+- Elevators: 1
+- Elevator Capacity: 10
+- Duration: 500
+- Data Structure: linked
+  
+To customize the configuration, create a properties file with the following keys:
+
+- structures
+- floors
+- passengers
+- elevators
+- elevatorCapacity
+- duration
+
+## Simulation Results
+
+The simulation reports average, longest, and shortest travel times of passengers. The results include the time it takes for passengers to travel from their starting floor to their destination floor.
